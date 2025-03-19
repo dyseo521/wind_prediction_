@@ -29,6 +29,8 @@ COPY weather_router.py .
 COPY power_calculation.py .
 COPY power_router.py .
 COPY time_series_analysis.py .
+COPY ess_controller.py .
+COPY ess_router.py .
 
 # .env 파일 복사 (존재하는 경우)
 COPY .env .env

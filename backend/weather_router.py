@@ -154,9 +154,12 @@ async def get_current_weather():
         
         # 매시각 40분 이전이면 이전 시각의 발표 데이터 사용
         if now.minute < 40:
-            now = now - timedelta(hours=1)
-        
-        base_time = now.strftime("%H00")
+             now = now - timedelta(hours=1) # 한시간 이전
+             base_date = now.strftime("%Y%m%d")
+             base_time = now.strftime("%H00")
+        else:
+             base_date = now.strftime("%Y%m%d")
+             base_time = now.strftime("%H00")
         
         print(f"[Current Weather] Request for base_date: {base_date}, base_time: {base_time}")
         

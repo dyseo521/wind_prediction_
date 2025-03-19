@@ -56,11 +56,16 @@ try:
     # 전력 계산 모듈 및 라우터 로드
     from power_calculation import PowerCalculator
     
+    # ESS 컨트롤러 및 라우터 로드
+    from ess_controller import ESSController
+    import ess_router
+    
     # 라우터 등록
     app.include_router(power_router.router)
     app.include_router(weather_router.router)
+    app.include_router(ess_router.router)  # ESS 라우터 추가
     
-    print("전력 계산 모듈 로드 완료")
+    print("전력 계산 모듈 및 ESS 모듈 로드 완료")
 except Exception as e:
     print(f"추가 모듈 로드 오류: {e}")
     traceback.print_exc()
