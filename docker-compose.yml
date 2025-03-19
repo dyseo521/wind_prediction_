@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  # 백엔드 API 서비스
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./uploads:/app/uploads
+      - ./models:/app/models
+      - ./cache:/app/cache
+      - ./logs:/app/logs  # 로그 디렉토리 추가
+    env_file:
+      - ./backend/.env
+    environment:
+      - PYTHONUNBUFFERED=1
+      - UPLOAD_DIR=/app/uploads
+      - MODEL_DIR=/app/models
+      - CACHE_DIR=/app/cache
+      - KMA_API_URL=http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0
+      - FORECAST_NX=54
+      - FORECAST_NY=124
+      - LOG_LEVEL=DEBUG  # 로깅 레벨 추가
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # 프론트엔드 서비스
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    env_file:
+      - ./frontend/.env
+    environment:
+      - REACT_APP_KMA_API_URL=http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0
+      - REACT_APP_API_BASE_URL=http://localhost:8000/api
+      - REACT_APP_FORECAST_NX=54
+      - REACT_APP_FORECAST_NY=124
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  data:
+  uploads:
+  models:
+  cache:
+  logs:  # 로그 볼륨 추가
