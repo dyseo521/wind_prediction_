@@ -23,9 +23,6 @@ RUN mkdir -p /app/uploads /app/models /app/cache /app/data /app/logs
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 추가: 디버깅 및 모니터링 도구 설치
-RUN pip install --no-cache-dir pytest pytest-cov logging-color-formatter
-
 # 애플리케이션 코드 복사
 COPY app.py .
 COPY weather_router.py .
@@ -36,7 +33,7 @@ COPY time_series_analysis.py .
 # .env 파일 복사 (존재하는 경우)
 COPY .env .env
 
-# 추가: 로깅 설정
+# 로깅 설정
 ENV PYTHONPATH=/app
 ENV LOG_LEVEL=DEBUG
 
