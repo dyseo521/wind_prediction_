@@ -10,6 +10,10 @@ COPY package.json ./
 # npm ci는 package-lock.json이 필요하지만 현재 없는 상태
 RUN npm install
 
+
+# 소스 코드 복사 (public 폴더 포함)
+COPY . ./
+
 # .env 파일 복사 (React 앱은 빌드 시점에 환경변수가 필요함)
 COPY .env ./
 
