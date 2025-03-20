@@ -697,10 +697,10 @@ async def predict_daily_power(
             # 시간에 따른 인원 수 변동 모델
             if 0 <= hour < 6:  # 심야
                 hourly_people_counts.append(int(avg_hourly_people * 0.1))
-            elif 6 <= hour < 9:  # 출근 시간
-                hourly_people_counts.append(int(avg_hourly_people * 1.5))
-            elif 9 <= hour < 12:  # 오전
+            elif 6 <= hour < 9:  # 아침침
                 hourly_people_counts.append(int(avg_hourly_people * 1.2))
+            elif 9 <= hour < 12:  # 오전
+                hourly_people_counts.append(int(avg_hourly_people * 1.5))
             elif 12 <= hour < 14:  # 점심
                 hourly_people_counts.append(int(avg_hourly_people * 1.8))
             elif 14 <= hour < 18:  # 오후
@@ -858,9 +858,9 @@ async def predict_realtime_power(
             if 0 <= current_hour < 6:  # 심야
                 people_count = int(avg_hourly_people * 0.1)
             elif 6 <= current_hour < 9:  # 출근 시간
-                people_count = int(avg_hourly_people * 1.5)
-            elif 9 <= current_hour < 12:  # 오전
                 people_count = int(avg_hourly_people * 1.2)
+            elif 9 <= current_hour < 12:  # 오전
+                people_count = int(avg_hourly_people * 1.5)
             elif 12 <= current_hour < 14:  # 점심
                 people_count = int(avg_hourly_people * 1.8)
             elif 14 <= current_hour < 18:  # 오후
