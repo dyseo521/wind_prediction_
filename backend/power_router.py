@@ -758,7 +758,72 @@ async def predict_weekly_power(
         print(f"주간 전력 예측 오류: {e}")
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=f"주간 전력 예측 중 오류 발생: {str(e)}")
+
+# 추가된 월간 발전량 예측 엔드포인트
+@router.get("/monthly/{location}")
+async def predict_monthly_power(
+    location: str = Path(..., description="위치 (5호관_60주년_사이, 인경호_앞, 하이데거숲)"),
+    avg_wind_speed: float = Query(3.5, description="평균 풍속 (m/s)"),
+    min_temp: float = Query(5.0, description="최저 기온 (°C)"),
+    max_temp: float = Query(25.0, description="최고 기온 (°C)")
+):
+    """
+    월간 전력 발전량 예측
+    """
+    try:
+        # 위치 유효성 검사
+        if location not in SUPPORTED_LOCATIONS:
+            raise HTTPException(status_code=400, detail=f"지원되지 않는 위치: {location}. 지원되는 위치: {SUPPORTED_LOCATIONS}")
         
+        # 주별 풍속 생성 (평균 풍속에서 약간의 변동 추가)
+        weekly_wind_speeds = [
+            avg_wind_speed * (1 + 0.05 * (i - 1.5)) for i in range(4)  # 4주
+        ]
+        
+        # 온도 정보 설정
+        temp_info = {
+            'min': min_temp,
+            'max': max_temp,
+            'current': (min_temp + max_temp) / 2  # 평균 기온
+        }
+        
+        # 월간 발전량 예측
+        result = power_calculator.predict_monthly_power(location, weekly_wind_speeds, None, temp_info)
+        
+        return result
+    
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"월간 전력 예측 오류: {e}")
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"월간 전력 예측 중 오류 발생: {str(e)}")
+
+# 추가된 연간 발전량 예측 엔드포인트
+@router.get("/annual/{location}")
+async def predict_annual_power(
+    location: str = Path(..., description="위치 (5호관_60주년_사이, 인경호_앞, 하이데거숲)")
+):
+    """
+    연간 전력 발전량 예측
+    """
+    try:
+        # 위치 유효성 검사
+        if location not in SUPPORTED_LOCATIONS:
+            raise HTTPException(status_code=400, detail=f"지원되지 않는 위치: {location}. 지원되는 위치: {SUPPORTED_LOCATIONS}")
+        
+        # 연간 발전량 예측
+        result = power_calculator.predict_annual_power(location)
+        
+        return result
+    
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"연간 전력 예측 오류: {e}")
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"연간 전력 예측 중 오류 발생: {str(e)}")
+
 @router.get("/realtime/{location}")
 async def predict_realtime_power(
     location: str = Path(..., description="위치 (5호관_60주년_사이, 인경호_앞, 하이데거숲)"),
