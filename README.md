@@ -88,7 +88,7 @@
 ```
 ├── backend/                     # 백엔드 코드
 │   ├── app.py                   # FastAPI 메인 앱
-│   ├── initialize_system.py     # 시계열 모델 및 루트 빌드 (초기 시작시 실행 필수수)
+│   ├── initialize_system.py     # 시계열 모델 및 루트 빌드 (초기 시작시 실행 필수)
 │   ├── power_calculation.py     # 전력 계산 모듈
 │   ├── power_router.py          # 전력 관련 API 라우터
 │   ├── weather_router.py        # 날씨 관련 API 라우터
