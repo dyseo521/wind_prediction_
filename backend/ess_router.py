@@ -17,6 +17,7 @@ from pydantic import BaseModel
 from ess_controller import ESSController
 from power_calculation import PowerCalculator
 from time_series_analysis import TimeSeriesAnalyzer
+from zoneinfo import ZoneInfo
 
 # 라우터 생성
 router = APIRouter(prefix="/api/ess", tags=["ess"])
@@ -406,7 +407,7 @@ async def get_daily_ess_schedule(
         
         # 총 가로등 소비 전력
         total_streetlight_consumption = daily_power['streetlight_consumption_wh']
-        daily_required_battery_capacity = total_streetlight_consumption * 0.5  # 배터리가 담당할 비율 (50%)
+        daily_required_battery_capacity = total_streetlight_consumption 
         
         # 표준 충전 시간 (8시 ~ 16시)
         charge_start_hour = 8

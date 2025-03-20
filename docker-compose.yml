@@ -24,6 +24,7 @@ services:
       - FORECAST_NX=54
       - FORECAST_NY=124
       - LOG_LEVEL=DEBUG
+      - TZ=Asia/Seoul
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/api/health/"]
@@ -47,6 +48,7 @@ services:
       - REACT_APP_API_BASE_URL=http://localhost:8000/api
       - REACT_APP_FORECAST_NX=54
       - REACT_APP_FORECAST_NY=124
+      - TZ=Asia/Seoul
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:80"]

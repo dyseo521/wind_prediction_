@@ -13,6 +13,7 @@ import traceback
 import time
 from dotenv import load_dotenv
 from fastapi import APIRouter, HTTPException
+from zoneinfo import ZoneInfo
 
 # 환경변수 로드
 load_dotenv()
@@ -33,8 +34,7 @@ cache_timestamp = None
 CACHE_TTL = 1800  # 30분 (초 단위)
 
 def get_korea_time():
-    """한국 시간 반환"""
-    return datetime.now() + timedelta(hours=9)
+    return datetime.now(ZoneInfo("Asia/Seoul"))
 
 def cache_is_valid():
     """캐시 유효성 검사"""
