@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import PowerDashboard from './PowerDashboard';
 import ESSDashboard from './ESSDashboard';
-
-// API 기본 URL 설정 (환경변수 사용)
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api';
+import inhaLogo from './images/inha.jpg';
 
 const App = () => {
   const [activeSection, setActiveSection] = useState('power'); // 'power' 또는 'ess'
@@ -12,8 +10,15 @@ const App = () => {
     <div className="flex flex-col p-6 max-w-6xl mx-auto min-h-screen relative">
       {/* Semi-transparent container for better readability */}
       <div className="bg-white bg-opacity-90 rounded-lg shadow-lg p-6">
-        <h1 className="text-3xl font-bold mb-2 text-center text-gray-800">ESSentials</h1>
-        <p className="text-center text-gray-600 mb-6">전력 발전량 통합 시스템</p>
+        {/* 인하대학교 로고 추가 - 크기 축소 */}
+        <div className="flex justify-center mb-4">
+          <img 
+            src={inhaLogo} 
+            alt="인하대학교 로고" 
+            className="w-auto h-auto max-w-sm" 
+            // max-w-2xl → max-w-md로 변경 (더 작게)
+          />
+        </div>
         
         {/* 메인 네비게이션 */}
         <div className="mb-8 flex justify-center">

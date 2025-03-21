@@ -1205,8 +1205,8 @@ const PowerDashboard = () => {
   // 메인 대시보드 렌더링
   return (
     <div className="flex flex-col p-6 max-w-6xl mx-auto bg-gray-50 min-h-screen">
-      <h1 className="text-3xl font-bold mb-2 text-center text-gray-800">전력 발전량 대시보드</h1>
-      <p className="text-center text-gray-600 mb-6">풍력 및 지압 발전 시스템 통합 모니터링</p>
+      <h1 className="text-5xl font-bold mb-4 text-center text-gray-800">전력 발전량 대시보드</h1>
+      <p className="text-xl text-center text-gray-600 mb-6">풍력 및 지압 발전 시스템 통합 모니터링</p>
       
       {renderTabs()}
       {renderControls()}
